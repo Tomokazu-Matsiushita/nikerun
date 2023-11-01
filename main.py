@@ -1,16 +1,16 @@
 import streamlit as st
 from gtts import gTTS
-import pygame
+#import pygame
 
 # Initialize pygame for audio playback
-pygame.mixer.init()
+#pygame.mixer.init()
 
 # Voice announcement function
 def speak(text):
     tts = gTTS(text, lang='en')
     tts.save("announcement.mp3")
-    pygame.mixer.music.load("announcement.mp3")
-    pygame.mixer.music.play()
+    #pygame.mixer.music.load("announcement.mp3")
+    #pygame.mixer.music.play()
 
 # Streamlit app
 st.title("Nike Run Club App")
