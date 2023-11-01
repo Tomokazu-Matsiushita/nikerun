@@ -1,5 +1,18 @@
 import streamlit as st
+from gtts import gTTS
+import pygame
 
+# Initialize pygame for audio playback
+pygame.mixer.init()
+
+# Voice announcement function
+def speak(text):
+    tts = gTTS(text, lang='en')
+    tts.save("announcement.mp3")
+    pygame.mixer.music.load("announcement.mp3")
+    pygame.mixer.music.play()
+
+# Streamlit app
 st.title("Nike Run Club App")
 
 # Sidebar options
@@ -16,14 +29,25 @@ paces = {
     "Recovery": ("Recovery pace", None),
 }
 
-if selected_pace in paces:
-    pace, pace_length = paces[selected_pace]
-    if pace_length:
-        lap_length = lap_duration / pace_length
-        st.write(f"Selected Pace: {pace}")
-        st.write(f"Lap Length: {lap_length:.2f} kilometers")
+if st.button("Start Countdown"):
+    if selected_pace in paces:
+        pace, pace_length = paces[selected_pace]
+        if pace_length:
+            lap_length = lap_duration / pace_length
+            st.write(f"Selected Pace: {pace}")
+            st.write(f"Lap Length: {lap_length:.2f} kilometers")
 
-    st.write("Start running and use the app for announcements.")
+        st.write("Start running and listen for the announcements:")
 
-else:
-    st.write("Select a valid pace from the sidebar.")
+        for lap in range(1, 26):
+            # Voice announcement 3 counts before each lap
+            if lap == 1:
+                speak("Get ready")
+            elif lap == 2:
+                speak("On your mark")
+            elif lap == 3:
+                speak("Get set")
+            speak(f"Lap {lap}, {lap_duration} minutes at {pace} pace")
+
+    else:
+        st.write("Select a valid pace from the sidebar.")
