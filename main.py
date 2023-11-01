@@ -1,18 +1,5 @@
 import streamlit as st
-from gtts import gTTS
-import pygame
 
-# Initialize pygame for audio playback
-pygame.mixer.init()
-
-# Voice announcement function
-def speak(text):
-    tts = gTTS(text, lang='en')
-    tts.save("announcement.mp3")
-    pygame.mixer.music.load("announcement.mp3")
-    pygame.mixer.music.play()
-    
-# Streamlit app
 st.title("Nike Run Club App")
 
 # Sidebar options
@@ -36,21 +23,7 @@ if selected_pace in paces:
         st.write(f"Selected Pace: {pace}")
         st.write(f"Lap Length: {lap_length:.2f} kilometers")
 
-    st.write("Start running and listen for the announcements:")
-    
-    for lap in range(1, 26):
-        # Voice announcement 3 counts before each lap
-        if lap == 1:
-            speak("Get ready")
-        elif lap == 2:
-            speak("On your mark")
-        elif lap == 3:
-            speak("Get set")
-        speak(f"Lap {lap}, {lap_duration} minutes at {pace} pace")
+    st.write("Start running and use the app for announcements.")
 
 else:
     st.write("Select a valid pace from the sidebar.")
-
-# Close the pygame mixer at the end of the app
-st.text("You can close the app now.")
-pygame.mixer.quit()
